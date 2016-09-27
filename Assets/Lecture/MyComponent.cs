@@ -7,7 +7,7 @@ public class MyComponent : MonoBehaviour {
 
     public int intVariable;
     public float floatVariable;
-    public GameObject[] gameObject;
+    public GameObject[] GameObject;
 
    [SerializeField]
     private int _intVar;

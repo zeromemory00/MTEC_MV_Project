@@ -47,6 +47,7 @@ public class MidiPlayerEditor : Editor
                     midiplayer.Pause();
                 }
 
+                EditorUtility.SetDirty(target);
 
             }
             else
@@ -73,7 +74,8 @@ public class MidiPlayerEditor : Editor
             }
             GUILayout.EndHorizontal();
 
-            EditorGUILayout.Slider(midiplayer.playTime, 0f, midiplayer.totalTime);
+            //EditorGUILayout.Slider(midiplayer.playTime, 0f, midiplayer.totalTime);
+            GUILayout.HorizontalSlider(midiplayer.playTime, 0f, midiplayer.totalTime);
             EditorGUILayout.LabelField(string.Format("Time : {0:f1}sec", midiplayer.playTime));
         }
     }

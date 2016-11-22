@@ -1,87 +1,86 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+
 
 public class MidiEventTrigger : MonoBehaviour
 {
-
     public bool[] instrumentFilter = new bool[129];
- 	public bool[] noteFilter = new bool[128];
+    public bool[] noteFilter = new bool[128];
+
+    public UnityEvent eventNoteOn;
+    public UnityEvent eventNoteOff;
+
+
     private bool _noteOn = false;
-	
-	public void Play()
-	{
-		//Debug.Log("MidiEventTrigger - Play");
+
+    public void Play()
+    {
         _noteOn = false;
         OnPlay();
-	}
-
-	public void Pause()
-	{
-		//Debug.Log("MidiEventTrigger - Pause");
-        OnPause();
-	}
-
-	public void Resume()
-	{
-		//Debug.Log("MidiEventTrigger - Resume");
-        OnResume();
-	}
-
-	public void Stop()
-	{
-		//Debug.Log("MidiEventTrigger - Stop");
-        OnStop();
-	}
-
-	public void NoteOn(int instrument, int noteNumber)
-	{
-		//Debug.Log(string.Format("MidiEventTrigger - NoteOn {0:d}, {1:d}", instrument, noteNumber));
-        if(_noteOn == false)
-		{
-			_noteOn = true;
-
-			if(instrumentFilter[instrument] == true && noteFilter[noteNumber] == true)
-			{
-				Debug.Log("NoteOn");
-				OnNoteOn();
-			}
-		}
-	}
-
-	public void NoteOff(int instrument, int noteNumber)
-	{
-		//Debug.Log(string.Format("MidiEventTrigger - NoteOn {0:d}, {1:d}", instrument, noteNumber));
-        _noteOn = false;
-
-		if(instrumentFilter[instrument] == true && noteFilter[noteNumber] == true)
-		{
-			Debug.Log("NoteOff");
-			OnNoteOff();
-		}
     }
 
-  	protected virtual void OnPlay()
-	{
-	}
+    public void Pause()
+    {
+        OnPause();
+    }
 
-	protected virtual void OnPause()
-	{
-	}
+    public void Resume()
+    {
+        OnResume();
+    }
 
-	protected virtual void OnResume()
-	{
-	}
+    public void Stop()
+    {
+        OnStop();
+    }
 
-	protected virtual void OnStop()
-	{
-	}
+    public void NoteOn(int instrument, int noteNumber)
+    {
+        if (_noteOn == false)
+        {
+            _noteOn = true;
 
-	protected virtual void OnNoteOn()
-	{
-	}
+            if (instrumentFilter[instrument] == true && noteFilter[noteNumber] == true)
+            {
+                eventNoteOn.Invoke();
+                OnNoteOn();
+            }
+        }
+    }
 
-	protected virtual void OnNoteOff()
-	{
-  	}
+    public void NoteOff(int instrument, int noteNumber)
+    {
+        _noteOn = false;
 
+        if (instrumentFilter[instrument] == true && noteFilter[noteNumber] == true)
+        {
+            eventNoteOff.Invoke();
+            OnNoteOff();
+        }
+    }
+
+    protected virtual void OnPlay()
+    {
+    }
+
+    protected virtual void OnPause()
+    {
+    }
+
+    protected virtual void OnResume()
+    {
+    }
+
+    protected virtual void OnStop()
+    {
+    }
+
+    protected virtual void OnNoteOn()
+    {
+    }
+
+    protected virtual void OnNoteOff()
+    {
+    }
 }

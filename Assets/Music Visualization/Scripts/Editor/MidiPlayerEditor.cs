@@ -40,7 +40,7 @@ public class MidiPlayerEditor : Editor
         if (Application.isPlaying == true)
         {
             GUILayout.BeginHorizontal();
-            if (midiplayer.IsPlaying == true)
+            if (midiplayer.isPlaying == true)
             {
                 if (GUILayout.Button("Pause") == true)
                 {
